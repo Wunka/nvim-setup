@@ -4,7 +4,7 @@ plugged/
 bundle/
 
 # Lazy.nvim
-lazy-lock.json   # optional: commit this if you want reproducible plugin versions
+/lazy-lock.json
 
 # Mason (LSP/DAP/tool installer)
 mason/
