@@ -69,9 +69,9 @@ vim.opt.cmdheight = 0
 --     runInTerminal = false,
 --   },
 -- }
+-- local cppstart = require("conf.cppstart")
+-- vim.keymap.set("n", "<leader>cs", cppstart.start_project, { desc = "Create new C++ project" })
 
-local cppstart = require("conf.cppstart")
-vim.keymap.set("n", "<leader>cs", cppstart.start_project, { desc = "Create new C++ project" })
 -- Transparent background
 vim.cmd([[
   highlight Normal guibg=NONE ctermbg=NONE
@@ -79,17 +79,3 @@ vim.cmd([[
   highlight EndOfBuffer guibg=NONE ctermbg=NONE
   highlight SignColumn guibg=NONE ctermbg=NONE
 ]])
-vim.keymap.set("n", "<leader>fu", function()
-  -- Assumes you opened nvim in Cubyz/master, Cubyz/dropdown, etc.
-  local cwd = vim.fn.getcwd()
-  local parent = vim.fn.fnamemodify(cwd, ":h")       -- go one level up
-  local script = parent .. "/scripts/format.sh"
-
-  if vim.fn.filereadable(script) == 0 then
-    vim.notify("Formatter script not found: " .. script, vim.log.levels.ERROR)
-    return
-  end
-
-  vim.cmd("!" .. script)
-end, { desc = "Format modified + untracked files (Cubyz)" })
-

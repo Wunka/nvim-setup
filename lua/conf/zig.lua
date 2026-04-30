@@ -79,9 +79,27 @@ end
 
 -- Keymaps
 function M.setup_keymaps()
-  vim.keymap.set("n", "<leader>zb", M.toggle_build, { desc = "Zig Build", noremap = true, silent = true })
-  vim.keymap.set("n", "<leader>zt", M.toggle_test,  { desc = "Zig Test",  noremap = true, silent = true })
-  vim.keymap.set("n", "<leader>zr", M.toggle_run,   { desc = "Zig Run",   noremap = true, silent = true })
+	local wk = require("which-key")
+	
+	wk.add({
+		{ "<leader>z", group = "zig/Cubyz"},
+		{"<leader>zb", M.toggle_build, desc = "Zig Build"},
+		{"<leader>zt", M.toggle_test,  desc = "Zig Test"},
+		{"<leader>zr", M.toggle_run,   desc = "Zig Run"},
+		{"<leader>zf", function()
+	  		-- Assumes you opened nvim in Cubyz/master, Cubyz/dropdown, etc.
+	  		local cwd = vim.fn.getcwd()
+	  		local parent = vim.fn.fnamemodify(cwd, ":h")       -- go one level up
+	  		local script = parent .. "/scripts/format.sh"
+
+	  		if vim.fn.filereadable(script) == 0 then
+				vim.notify("Formatter script not found: " .. script, vim.log.levels.ERROR)
+				return
+	  		end
+			vim.cmd("!" .. script)
+		end, desc = "Format modified + untracked files (Cubyz)" },
+	})
+
 end
 
 -- Master setup
