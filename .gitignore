@@ -1,0 +1,35 @@
+# Plugin managers (don’t commit installed plugins)
+pack/*
+plugged/
+bundle/
+
+# Lazy.nvim
+lazy-lock.json   # optional: commit this if you want reproducible plugin versions
+
+# Mason (LSP/DAP/tool installer)
+mason/
+
+# Compiled / generated files
+plugin/packer_compiled.lua
+
+# Swap, backup, undo files
+*.swp
+*.swo
+*~
+*.bak
+*.undo
+
+# Session files
+Session.vim
+Session.vim.json
+
+# Cache directories
+.cache/
+tmp/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
