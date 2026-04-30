@@ -10,7 +10,9 @@ return {
   	dashboard = { example = "github" },
     explorer = { enabled = false },
     statuscolumn = { enabled = false},
-    indent = { enabled = true},
+    scroll = { enabled = false },
+    
+	indent = { enabled = true},
     bigfile = { enabled = true },
 	gh = {
       -- your gh configuration comes here
@@ -35,7 +37,6 @@ return {
     quickfile = { enabled = true },
     scope = { enabled = true },
 	scratch = { enabled = true },
-    scroll = { enabled = true },
     words = { enabled = true },
 	zen = {},
   },

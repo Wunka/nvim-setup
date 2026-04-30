@@ -3,7 +3,7 @@ return {
   event = "VeryLazy",
   opts = {
   	triggers = {  
-    	{ "?", mode = { "n", "v" } }, -- Only trigger on ? key in normal and visual modes  
+    	{ "<leader>?", mode = { "n", "v" } }, -- Only trigger on ? key in normal and visual modes  
   	},  
   },
   keys = {
