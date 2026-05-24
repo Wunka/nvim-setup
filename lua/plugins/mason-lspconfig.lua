@@ -37,7 +37,7 @@ return {
     -- zls (custom)
     ------------------------------------------------------------------
     vim.lsp.config.zls = vim.tbl_extend("force", vim.lsp.config["*"], {
-	  cmd = {"/home/Wunka/.config/nvim/zls/zig-out/bin/zls", "--log-level", "warn", "--log-fil", vim.fn.stdpath('cache') .. "/zls.log"},
+	  -- cmd = {"/home/Wunka/.config/nvim/zls/zig-out/bin/zls", "--log-level", "warn", "--log-fil", vim.fn.stdpath('cache') .. "/zls.log"},
       root_markers = { "zls_main.zig", "build.zig", ".git" },
     })
 
@@ -62,11 +62,8 @@ return {
     ------------------------------------------------------------------
     -- enable everything Mason installed
     ------------------------------------------------------------------
-    vim.api.nvim_create_autocmd("User", {
-      pattern = "MasonLspConfigReady",
-      callback = function()
-        vim.lsp.enable(require("mason-lspconfig").get_installed_servers())
-      end,
-    })
+	for _, server in ipairs(require("mason-lspconfig").get_installed_servers()) do
+	  vim.lsp.enable(server)
+	end
   end,
 }

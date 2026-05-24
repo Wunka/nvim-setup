@@ -9,8 +9,6 @@ function M.setup_lsp()
 
 	  settings = {
 		zls = {
-		zig_exe_path = "/home/Wunka/Documents/Cubyz/master/compiler/zig/zig",
-		zig_lib_path = "/home/Wunka/Documents/Cubyz/master/compiler/zig/lib",
 		  modules = {
 			main = "src/main.zig",
 		  },

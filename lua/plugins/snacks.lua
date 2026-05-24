@@ -34,7 +34,7 @@ return {
 	image = {enabled = true},
     input = { enabled = true},
     notifier = { enabled = true },
-    quickfile = { enabled = true },
+    quickfile = { enabled = false },
     scope = { enabled = true },
 	scratch = { enabled = true },
     words = { enabled = true },
