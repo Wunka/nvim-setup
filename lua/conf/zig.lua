@@ -95,6 +95,7 @@ function M.setup_keymaps()
 				return
 	  		end
 			vim.cmd("!" .. script)
+			require("lint").try_lint()
 		end, desc = "Format modified + untracked files (Cubyz)" },
 	})
 

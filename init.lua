@@ -79,3 +79,6 @@ vim.cmd([[
   highlight EndOfBuffer guibg=NONE ctermbg=NONE
   highlight SignColumn guibg=NONE ctermbg=NONE
 ]])
+
+require('Comment').setup()
+

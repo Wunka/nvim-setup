@@ -33,31 +33,89 @@ return {
       on_attach = on_attach,
     }
 
+	vim.lsp.config.clangd = require("esp32").lsp_config()
+
+
     ------------------------------------------------------------------
     -- zls (custom)
     ------------------------------------------------------------------
     vim.lsp.config.zls = vim.tbl_extend("force", vim.lsp.config["*"], {
 	  -- cmd = {"/home/Wunka/.config/nvim/zls/zig-out/bin/zls", "--log-level", "warn", "--log-fil", vim.fn.stdpath('cache') .. "/zls.log"},
-      root_markers = { "zls_main.zig", "build.zig", ".git" },
+      	filetypes = {'zig'},
+	  	root_markers = { "zls_main.zig", "build.zig", ".git" },
+		settings = {
+			zls = {
+				highlight_global_var_declarations = false,
+        		enable_build_on_save = true,
+			}
+		},
     })
 
+	vim.api.nvim_create_autocmd('BufWritePre', {
+	  pattern = { "*.zig", "*.zon" },
+	  callback = function(ev)
+		vim.lsp.buf.code_action({
+		  context = { only = { "source.fixAll" } },
+		  apply = true,
+		})
+	  end
+	})
     ------------------------------------------------------------------
     -- clangd (custom)
     ------------------------------------------------------------------
-    vim.lsp.config.clangd = vim.tbl_extend("force", vim.lsp.config["*"], {
-      cmd = {
-        "clangd",
-        "--background-index",
-        "--clang-tidy",
-        "--header-insertion=never",
-        "--completion-style=detailed",
-        "--pch-storage=memory",
-      },
-      root_markers = { ".git", "." },
-      init_options = {
-        compilationDatabaseFallback = true,
-      },
-    })
+    -- vim.lsp.config.clangd = vim.tbl_extend("force", vim.lsp.config["*"], {
+    --   cmd = {
+    --     "clangd",
+    --     "--background-index",
+    --     "--clang-tidy",
+    --     "--header-insertion=never",
+    --     "--completion-style=detailed",
+    --     "--pch-storage=memory",
+    --   },
+    --   root_markers = { ".git", "." },
+    --   init_options = {
+    --     compilationDatabaseFallback = true,
+    --   },
+    -- })
+    --
+	vim.api.nvim_create_autocmd('FileType', {
+	  group = vim.api.nvim_create_augroup('ziggy', {}),
+	  pattern = {'ziggy', "*.ziggy"},
+	  callback = function()
+		vim.lsp.start {
+		  name = 'Ziggy LSP',
+		  cmd = { 'ziggy', 'lsp' },
+		  root_dir = vim.loop.cwd(),
+		  flags = { exit_timeout = 1000 },
+		}
+	  end,
+	})
+
+	vim.api.nvim_create_autocmd('FileType', {
+	  group = vim.api.nvim_create_augroup('ziggy_schema', {}),
+	  pattern = 'ziggy_schema',
+	  callback = function()
+		vim.lsp.start {
+		  name = 'Ziggy LSP',
+		  cmd = { 'ziggy', 'lsp', '--schema' },
+		  root_dir = vim.loop.cwd(),
+		  flags = { exit_timeout = 1000 },
+		}
+	  end,
+	})
+
+	vim.api.nvim_create_autocmd('FileType', {
+	  group = vim.api.nvim_create_augroup('superhtml', {}),
+	  pattern = {'superhtml', "*.smd"},
+	  callback = function()
+		vim.lsp.start {
+		  name = 'SuperHTML LSP',
+		  cmd = { 'superhtml', 'lsp' },
+		  root_dir = vim.loop.cwd(),
+		  flags = { exit_timeout = 1000 },
+		}
+	  end,
+	})
 
     ------------------------------------------------------------------
     -- enable everything Mason installed
